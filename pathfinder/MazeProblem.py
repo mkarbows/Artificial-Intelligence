@@ -24,7 +24,7 @@ Maze elements are indexed starting at (0, 0) [top left of maze]. E.g.,
 2 X...X
 3 X*..X
 4 XXXXX
- 
+
 === States ===
 Representing the position of the agent, as tuples in which:
 (x, y) = (col, row)
@@ -44,30 +44,56 @@ then the transitions for that s = (1, 1) would be:
 [("R", (2, 1)), ("D", (1, 2))]
 '''
 class MazeProblem:
-    
+
     # MazeProblem Constructor:
     # Constructs a new pathfinding problem from a maze, described above
     def __init__(self, maze):
         self.maze = maze
-        self.initial = None
+        # self.initial = None
         self.goals = []
-        
+
         # TODO: Populate initial and goals attributes
-    
+        depth = -1
+        goalIndex = -1
+        for s in maze:
+            depth += 1
+            goalIndex = -1
+            isInit = s.find("*")
+            for c in s:
+                goalIndex += 1
+                if c == "G":
+                    self.goals.append((depth, goalIndex))
+            if isInit >= 0:
+                self.initial = (depth, isInit)
+
+        print(self.initial)
+        print(self.goals)
+
     # goalTest is parameterized by a state, and
     # returns True if the given state is a goal, False otherwise
     def goalTest(self, state):
         # TODO: Implement as intended
-        return False
-    
+        if state in self.goals:
+            return True
+        else:
+            return False
+
     # transitions returns a list of tuples in the format:
     # [(action1, result(action1, s), ...]
     # corresponding to allowable actions of the given state, as well
     # as the next state the action leads to
     def transitions(self, state):
         # TODO: Implement as intended
+        if (state[0], state[1]+1) == "." or (state[0], state[1]+1) == "G":
+            transitions.append("U", (state[0], state[1]+1))
+        if (state[0], state[1]-1) == "." or (state[0], state[1]-1) == "G":
+            transitions.append("D", (state[0], state[1]-1))
+        if (state[0]+1, state[1]) == "." or (state[0]+1, state[1]) == "G":
+            transitions.append("R", (state[0]+1, state[1]))
+        if (state[0]-1, state[1]) == "." or (state[0]-1, state[1]) == "G":
+            transitions.append("L", (state[0]-1, state[1]))
         return []
-    
+
     # solnTest will return a tuple of the format (cost, isSoln) where:
     # cost = the total cost of the solution,
     # isSoln = true if the given sequence of actions of the format:
@@ -81,4 +107,3 @@ class MazeProblem:
             if self.maze[s[1]][s[0]] == "X":
                 return (-1, False)
         return (len(soln), self.goalTest(s))
-    
