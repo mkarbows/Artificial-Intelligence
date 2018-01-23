@@ -12,15 +12,43 @@ from SearchTreeNode import SearchTreeNode
 import unittest
 
 class Pathfinder:
-    
+
     # solve is parameterized by a maze pathfinding problem
     # (see MazeProblem.py and unit tests below), and will
     # return a list of actions that solves that problem. An
     # example returned list might look like:
     # ["U", "R", "R", "U"]
     def solve(problem):
-        # TODO: Implement breadth first tree search!
-        return []
+            # TODO: Implement breadth first tree search!
+        queue = []
+        rootNode = SearchTreeNode(problem.initial, None, None)
+        queue.append(rootNode)
+
+        def expandNode(queue):
+            node = queue[0]
+            transitions = MazeProblem.transitions(node.state)
+            #generate children
+            for t in transitions:
+                newNode = SearchTreeNode(t[1], t[0], node)
+                if MazeProblem.goalTest(newNode.state):
+                    return newNode
+                queue.append(newNode)
+                rootNode.children.append(newNode)
+            queue.pop(0)
+            #expand children
+            expandNode(queue)
+            #if there is a solution, it shouldn't get here:
+            return []
+
+        def createPath(node):
+            solution = []
+            currentNode = node
+            while currentNode.parent:
+                solution.append(currentNode.action)
+                currentNode = currentNode.parent
+            return solution
+
+        return createPath(expandNode(queue))
 
 class PathfinderTests(unittest.TestCase):
     def test_maze1(self):
@@ -30,7 +58,7 @@ class PathfinderTests(unittest.TestCase):
         solnTest = problem.solnTest(soln)
         self.assertTrue(solnTest[1])
         self.assertEqual(solnTest[0], 4)
-    
+
     def test_maze2(self):
         maze = ["XXXXX", "XG..X", "XX..X", "X*..X", "XXXXX"]
         problem = MazeProblem(maze)
@@ -38,7 +66,7 @@ class PathfinderTests(unittest.TestCase):
         solnTest = problem.solnTest(soln)
         self.assertTrue(solnTest[1])
         self.assertEqual(solnTest[0], 4)
-        
+
     # TODO: Add more unit tests!
 
 if __name__ == '__main__':
