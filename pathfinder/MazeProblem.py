@@ -84,15 +84,21 @@ class MazeProblem:
     # as the next state the action leads to
     def transitions(self, state):
         # TODO: Implement as intended
-        if (state[0], state[1]+1) == "." or (state[0], state[1]+1) == "G":
-            transitions.append("U", (state[0], state[1]+1))
-        if (state[0], state[1]-1) == "." or (state[0], state[1]-1) == "G":
-            transitions.append("D", (state[0], state[1]-1))
-        if (state[0]+1, state[1]) == "." or (state[0]+1, state[1]) == "G":
-            transitions.append("R", (state[0]+1, state[1]))
-        if (state[0]-1, state[1]) == "." or (state[0]-1, state[1]) == "G":
-            transitions.append("L", (state[0]-1, state[1]))
-        return []
+        transitions = []
+        up = self.maze[state[0]-1][state[1]]
+        down = self.maze[state[0]+1][state[1]]
+        right = self.maze[state[0]][state[1]+1]
+        left = self.maze[state[0]][state[1]-1]
+
+        if ((up == ".") or (up == "G")):
+            transitions.append(("U", (state[0]-1,state[1])))
+        if ((down == ".") or (down == "G")):
+            transitions.append(("D", (state[0]+1,state[1])))
+        if ((right == ".") or (right == "G")):
+            transitions.append(("R", (state[0],state[1]+1)))
+        if ((left == ".") or (left == "G")):
+            transitions.append(("L", (state[0],state[1]-1)))
+        return transitions
 
     # solnTest will return a tuple of the format (cost, isSoln) where:
     # cost = the total cost of the solution,

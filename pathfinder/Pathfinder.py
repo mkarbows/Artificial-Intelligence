@@ -18,37 +18,40 @@ class Pathfinder:
     # return a list of actions that solves that problem. An
     # example returned list might look like:
     # ["U", "R", "R", "U"]
+    def findGoal(queue, problem):
+        node = queue[0]
+        print("state",node.state)
+        transitions = problem.transitions(node.state)
+        print("transitions", transitions)
+
+        # generate children
+        for t in transitions:
+            newNode = SearchTreeNode(t[1], t[0], node)
+            if problem.goalTest(newNode.state):
+                print("goal", newNode.state)
+                return newNode
+            queue.append(newNode)
+            node.children.append(newNode)
+        queue.pop(0)
+
+        # expand children
+        return Pathfinder.findGoal(queue, problem)
+
+    def createPath(node):
+        solution = []
+        currentNode = node
+        while currentNode.parent:
+            solution.insert(0, currentNode.action)
+            currentNode = currentNode.parent
+        print("solution", solution)
+        return solution
+
     def solve(problem):
-            # TODO: Implement breadth first tree search!
+        # TODO: Implement breadth first tree search!
         queue = []
         rootNode = SearchTreeNode(problem.initial, None, None)
         queue.append(rootNode)
-
-        def expandNode(queue):
-            node = queue[0]
-            transitions = MazeProblem.transitions(node.state)
-            #generate children
-            for t in transitions:
-                newNode = SearchTreeNode(t[1], t[0], node)
-                if MazeProblem.goalTest(newNode.state):
-                    return newNode
-                queue.append(newNode)
-                rootNode.children.append(newNode)
-            queue.pop(0)
-            #expand children
-            expandNode(queue)
-            #if there is a solution, it shouldn't get here:
-            return []
-
-        def createPath(node):
-            solution = []
-            currentNode = node
-            while currentNode.parent:
-                solution.append(currentNode.action)
-                currentNode = currentNode.parent
-            return solution
-
-        return createPath(expandNode(queue))
+        return Pathfinder.createPath(Pathfinder.findGoal(queue, problem))
 
 class PathfinderTests(unittest.TestCase):
     def test_maze1(self):
@@ -64,6 +67,8 @@ class PathfinderTests(unittest.TestCase):
         problem = MazeProblem(maze)
         soln = Pathfinder.solve(problem)
         solnTest = problem.solnTest(soln)
+        print("should be true", solnTest[1])
+        print("should be 4", solnTest[0])
         self.assertTrue(solnTest[1])
         self.assertEqual(solnTest[0], 4)
 
