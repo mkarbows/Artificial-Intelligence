@@ -19,24 +19,18 @@ class Pathfinder:
     # example returned list might look like:
     # ["U", "R", "R", "U"]
     def findGoal(queue, problem):
-        # Get the next node in the queue and then find its possible transitions.
-        node = queue[0]
+        # Pop the next node in the queue and then find its possible transitions.
+        node = queue.pop(0)
         transitions = problem.transitions(node.state)
 
         for t in transitions:
-            # Create a node from the transition and return it if it is a goal
-            # node.
+            # Create a node from the transition.
             newNode = SearchTreeNode(t[1], t[0], node)
             if problem.goalTest(newNode.state):
-                print("goal", newNode.state)
+                # Congrats! You found a node whose state is a goal.
                 return newNode
-            # If it is not a goal node, add it to the queue.
+            # If it is not a goal state, add it to the queue.
             queue.append(newNode)
-            node.children.append(newNode)
-
-        # Once we have generated nodes from all of the transitions, we can
-        # remove the parent node from the queue.
-        queue.pop(0)
 
         # Continue the search with the updated queue.
         return Pathfinder.findGoal(queue, problem)
@@ -55,7 +49,6 @@ class Pathfinder:
             currentNode = currentNode.parent
 
         # Return the solution once you get to the initial node.
-        print("solution", solution)
         return solution
 
     def solve(problem):
@@ -110,7 +103,7 @@ class PathfinderTests(unittest.TestCase):
         soln = Pathfinder.solve(problem)
         solnTest = problem.solnTest(soln)
         self.assertTrue(solnTest[1])
-        self.assertEqual(solnTest[0], 4)
+        self.assertEqual(solnTest[0], 3)
 
     def test_maze4(self):
         maze = [

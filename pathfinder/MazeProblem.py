@@ -49,29 +49,21 @@ class MazeProblem:
     # Constructs a new pathfinding problem from a maze, described above
     def __init__(self, maze):
         self.maze = maze
-        # self.initial = None
         self.goals = []
 
-        depth = -1
-        goalIndex = -1
-        for s in maze:
-            depth += 1
-            goalIndex = -1
-            isInit = s.find("*")
-            for c in s:
-                goalIndex += 1
-                if c == "G":
-                    self.goals.append((depth, goalIndex))
-            if isInit >= 0:
-                self.initial = (depth, isInit)
+        for y in range(0, len(maze)):
+            row = maze[y]
+            for x in range(0, len(row)):
+                cell = row[x]
+                if cell == "G":
+                    self.goals.append((x,y))
+                if cell == "*":
+                    self.initial = (x,y)
 
     # goalTest is parameterized by a state, and
     # returns True if the given state is a goal, False otherwise
     def goalTest(self, state):
-        if state in self.goals:
-            return True
-        else:
-            return False
+        return state in self.goals
 
     # transitions returns a list of tuples in the format:
     # [(action1, result(action1, s), ...]
@@ -79,21 +71,23 @@ class MazeProblem:
     # as the next state the action leads to
     def transitions(self, state):
         transitions = []
+        x = state[0]
+        y = state[1]
 
         # The symbols at the adjacent locations on the graph:
-        up = self.maze[state[0]-1][state[1]]
-        down = self.maze[state[0]+1][state[1]]
-        right = self.maze[state[0]][state[1]+1]
-        left = self.maze[state[0]][state[1]-1]
+        up = self.maze[y-1][x]
+        down = self.maze[y+1][x]
+        right = self.maze[y][x+1]
+        left = self.maze[y][x-1]
 
         if ((up == ".") or (up == "G")):
-            transitions.append(("U", (state[0]-1,state[1])))
+            transitions.append(("U", (x, y-1)))
         if ((down == ".") or (down == "G")):
-            transitions.append(("D", (state[0]+1,state[1])))
+            transitions.append(("D", (x, y+1)))
         if ((right == ".") or (right == "G")):
-            transitions.append(("R", (state[0],state[1]+1)))
+            transitions.append(("R", (x+1, y)))
         if ((left == ".") or (left == "G")):
-            transitions.append(("L", (state[0],state[1]-1)))
+            transitions.append(("L", (x-1, y)))
 
         return transitions
 
