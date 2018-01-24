@@ -52,7 +52,6 @@ class MazeProblem:
         # self.initial = None
         self.goals = []
 
-        # TODO: Populate initial and goals attributes
         depth = -1
         goalIndex = -1
         for s in maze:
@@ -66,13 +65,9 @@ class MazeProblem:
             if isInit >= 0:
                 self.initial = (depth, isInit)
 
-        print(self.initial)
-        print(self.goals)
-
     # goalTest is parameterized by a state, and
     # returns True if the given state is a goal, False otherwise
     def goalTest(self, state):
-        # TODO: Implement as intended
         if state in self.goals:
             return True
         else:
@@ -83,8 +78,9 @@ class MazeProblem:
     # corresponding to allowable actions of the given state, as well
     # as the next state the action leads to
     def transitions(self, state):
-        # TODO: Implement as intended
         transitions = []
+
+        # The symbols at the adjacent locations on the graph:
         up = self.maze[state[0]-1][state[1]]
         down = self.maze[state[0]+1][state[1]]
         right = self.maze[state[0]][state[1]+1]
@@ -98,6 +94,7 @@ class MazeProblem:
             transitions.append(("R", (state[0],state[1]+1)))
         if ((left == ".") or (left == "G")):
             transitions.append(("L", (state[0],state[1]-1)))
+
         return transitions
 
     # solnTest will return a tuple of the format (cost, isSoln) where:

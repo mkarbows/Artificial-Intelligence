@@ -19,43 +19,67 @@ class Pathfinder:
     # example returned list might look like:
     # ["U", "R", "R", "U"]
     def findGoal(queue, problem):
+        # Get the next node in the queue and then find its possible transitions.
         node = queue[0]
-        print("state",node.state)
         transitions = problem.transitions(node.state)
-        print("transitions", transitions)
 
-        # generate children
         for t in transitions:
+            # Create a node from the transition and return it if it is a goal
+            # node.
             newNode = SearchTreeNode(t[1], t[0], node)
             if problem.goalTest(newNode.state):
                 print("goal", newNode.state)
                 return newNode
+            # If it is not a goal node, add it to the queue.
             queue.append(newNode)
             node.children.append(newNode)
+
+        # Once we have generated nodes from all of the transitions, we can
+        # remove the parent node from the queue.
         queue.pop(0)
 
-        # expand children
+        # Continue the search with the updated queue.
         return Pathfinder.findGoal(queue, problem)
 
     def createPath(node):
+        # Working from the goal node to the initial node, build the
+        # path.
         solution = []
         currentNode = node
+
+        # The inital node has no parent.
         while currentNode.parent:
+            # Add the action to the beginning of the list since we are starting
+            # from the end of the path.
             solution.insert(0, currentNode.action)
             currentNode = currentNode.parent
+
+        # Return the solution once you get to the initial node.
         print("solution", solution)
         return solution
 
     def solve(problem):
-        # TODO: Implement breadth first tree search!
-        queue = []
+        # The root node has no action or parent.
         rootNode = SearchTreeNode(problem.initial, None, None)
-        queue.append(rootNode)
-        return Pathfinder.createPath(Pathfinder.findGoal(queue, problem))
+
+        # The search tree (implemented in a queue) begins by only containing
+        # the root node.
+        queue = [rootNode]
+
+        # Find a node that is a goal.
+        goalNode = Pathfinder.findGoal(queue, problem)
+
+        # Return the path that gets you to that node.
+        return Pathfinder.createPath(goalNode)
 
 class PathfinderTests(unittest.TestCase):
     def test_maze1(self):
-        maze = ["XXXXX", "X..GX", "X...X", "X*..X", "XXXXX"]
+        maze = [
+            "XXXXX",
+            "X..GX",
+            "X...X",
+            "X*..X",
+            "XXXXX"]
         problem = MazeProblem(maze)
         soln = Pathfinder.solve(problem)
         solnTest = problem.solnTest(soln)
@@ -63,16 +87,69 @@ class PathfinderTests(unittest.TestCase):
         self.assertEqual(solnTest[0], 4)
 
     def test_maze2(self):
-        maze = ["XXXXX", "XG..X", "XX..X", "X*..X", "XXXXX"]
+        maze = [
+            "XXXXX",
+            "XG..X",
+            "XX..X",
+            "X*..X",
+            "XXXXX"]
         problem = MazeProblem(maze)
         soln = Pathfinder.solve(problem)
         solnTest = problem.solnTest(soln)
-        print("should be true", solnTest[1])
-        print("should be 4", solnTest[0])
         self.assertTrue(solnTest[1])
         self.assertEqual(solnTest[0], 4)
 
-    # TODO: Add more unit tests!
+    def test_maze3(self):
+        maze = [
+            "XXXXX",
+            "XX..X",
+            "XX.GX",
+            "X*..X",
+            "XXXXX"]
+        problem = MazeProblem(maze)
+        soln = Pathfinder.solve(problem)
+        solnTest = problem.solnTest(soln)
+        self.assertTrue(solnTest[1])
+        self.assertEqual(solnTest[0], 4)
+
+    def test_maze4(self):
+        maze = [
+            "XXXGX",
+            "XG..X",
+            "XX..X",
+            "X*..X",
+            "XXXXX"]
+        problem = MazeProblem(maze)
+        soln = Pathfinder.solve(problem)
+        solnTest = problem.solnTest(soln)
+        self.assertTrue(solnTest[1])
+        self.assertEqual(solnTest[0], 4)
+
+    def test_maze5(self):
+        maze = [
+            "XXXXX",
+            "XGXGX",
+            "XX..X",
+            "X*..X",
+            "XXXXX"]
+        problem = MazeProblem(maze)
+        soln = Pathfinder.solve(problem)
+        solnTest = problem.solnTest(soln)
+        self.assertTrue(solnTest[1])
+        self.assertEqual(solnTest[0], 4)
+
+    def test_maze6(self):
+        maze = [
+            "XXXXX",
+            "X*.XX",
+            "XX..X",
+            "XG..X",
+            "XXXXX"]
+        problem = MazeProblem(maze)
+        soln = Pathfinder.solve(problem)
+        solnTest = problem.solnTest(soln)
+        self.assertTrue(solnTest[1])
+        self.assertEqual(solnTest[0], 4)
 
 if __name__ == '__main__':
     unittest.main()
