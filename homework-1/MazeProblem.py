@@ -77,7 +77,22 @@ class MazeProblem:
     # provides the cell-distance to the nearest goal state
     def heuristic(self, state):
         # TODO: Implement as intended
-        return 0
+        x = state[0]
+        y = state[1]
+        goalX = 0
+        goalY = 0
+        xDist = 0
+        yDist = 0
+        dist = 0
+        goalDist = {}
+        for g in self.goals:
+            goalX = g[0]
+            goalY = g[1]
+            xDist = goalX - x
+            yDist = goalY - y
+            manhattanDist = xDist + yDist
+            goalDist[g] = manhattanDist
+        return min(goalDist.keys(), key=(lambda k: goalDist[k]))
 
     # transitions returns a list of tuples in the format:
     # [(action1, cost_of_action1, result(action1, s), ...]
@@ -85,7 +100,27 @@ class MazeProblem:
     # as the next state the action leads to
     def transitions(self, state):
         # TODO: Implement as intended
-        return []
+        transitions = []
+        x = state[0]
+        y = state[1]
+        costOfTrans = MazeProblem.cost(self, state)
+        
+        # The symbols at the adjacent locations on the graph:
+        up = self.maze[y-1][x]
+        down = self.maze[y+1][x]
+        right = self.maze[y][x+1]
+        left = self.maze[y][x-1]
+
+        if ((up == ".") or (up == "G")):
+            transitions.append(("U", costOfTrans, (x, y-1)))
+        if ((down == ".") or (down == "G")):
+            transitions.append(("D", costOfTrans, (x, y+1)))
+        if ((right == ".") or (right == "G")):
+            transitions.append(("R", costOfTrans, (x+1, y)))
+        if ((left == ".") or (left == "G")):
+            transitions.append(("L", costOfTrans, (x-1, y)))
+
+        return transitions
 
     # cost returns the cost of moving onto the given state, and employs
     # the MazeProblem's costMap
