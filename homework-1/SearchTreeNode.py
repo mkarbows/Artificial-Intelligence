@@ -26,8 +26,10 @@ In the notes, we refer to this value as being evaluated through g(n)
 The heuristic estimate of cost to be incurred from this node to the
 optimal solution
 '''
+from functools import total_ordering
+@total_ordering
+
 class SearchTreeNode:
-    
     def __init__(self, state, action, parent, totalCost, heuristicCost):
         self.state = state
         self.action = action
@@ -35,6 +37,13 @@ class SearchTreeNode:
         self.children = []
         self.totalCost = totalCost
         self.heuristicCost = heuristicCost
-    
+
     # TODO: Implement rich comparisons
-    
+    def __eq__(self, other):
+        return ((self.totalCost + self.heuristicCost) == (other.totalCost + other.heuristicCost))
+
+    def __ne__(self, other):
+        return not ((self.totalCost + self.heuristicCost) == (other.totalCost + other.heuristicCost))
+
+    def __lt__(self, other):
+        return ((self.totalCost + self.heuristicCost) < (self.totalCost + self.heuristicCost))
