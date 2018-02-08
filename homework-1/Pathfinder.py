@@ -23,7 +23,7 @@ class Pathfinder:
                 problem.count += 1
                 prQ.put(SearchTreeNode(child[2], child[0], parent, gOfN, MazeProblem.heuristic(problem, child[2])))
 
-    def createPath(goalNode):
+    def createPath(problem, goalNode):
         resultPath = []
         currentNode = goalNode
         while currentNode.parent:
@@ -43,7 +43,7 @@ class Pathfinder:
         while pQ.qsize():
             nextNode = pQ.get()
             if problem.goalTest(nextNode.state):
-                return Pathfinder.createPath(nextNode)
+                return Pathfinder.createPath(problem, nextNode)
             Pathfinder.generateChildren(problem, pQ, nextNode, nodesVisited)
         # printing the count
         print(problem.count)
