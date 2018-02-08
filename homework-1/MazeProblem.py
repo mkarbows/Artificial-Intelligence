@@ -89,7 +89,8 @@ class MazeProblem:
             yDist = goalY - y
             manhattanDist = xDist + yDist
             goalDist[g] = manhattanDist
-        return min(goalDist.keys(), key=(lambda k: goalDist[k]))
+        closestGoalCost = min(goalDist.keys(), key=(lambda k: goalDist[k]))
+        return goalDist[closestGoalCost]
 
     # transitions returns a list of tuples in the format:
     # [(action1, cost_of_action1, result(action1, s), ...]
