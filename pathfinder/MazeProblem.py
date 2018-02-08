@@ -51,6 +51,8 @@ class MazeProblem:
         self.maze = maze
         self.goals = []
 
+        self.count = 0
+
         for y in range(0, len(maze)):
             row = maze[y]
             for x in range(0, len(row)):

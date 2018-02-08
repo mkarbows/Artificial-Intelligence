@@ -31,39 +31,36 @@ class Pathfinder:
                 return newNode
             # If it is not a goal state, add it to the queue.
             queue.append(newNode)
-
+        problem.count += 1
         # Continue the search with the updated queue.
         return Pathfinder.findGoal(queue, problem)
 
-    def createPath(node):
+    def createPath(problem, node):
         # Working from the goal node to the initial node, build the
         # path.
         solution = []
         currentNode = node
-
         # The inital node has no parent.
         while currentNode.parent:
             # Add the action to the beginning of the list since we are starting
             # from the end of the path.
             solution.insert(0, currentNode.action)
             currentNode = currentNode.parent
-
         # Return the solution once you get to the initial node.
         return solution
 
     def solve(problem):
         # The root node has no action or parent.
         rootNode = SearchTreeNode(problem.initial, None, None)
-
         # The search tree (implemented in a queue) begins by only containing
         # the root node.
         queue = [rootNode]
-
         # Find a node that is a goal.
         goalNode = Pathfinder.findGoal(queue, problem)
 
+        print(problem.count)
         # Return the path that gets you to that node.
-        return Pathfinder.createPath(goalNode)
+        return Pathfinder.createPath(problem, goalNode)
 
 class PathfinderTests(unittest.TestCase):
     def test_maze1(self):
