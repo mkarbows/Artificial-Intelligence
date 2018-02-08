@@ -68,10 +68,7 @@ class MazeProblem:
     # returns True if the given state is a goal, False otherwise
     def goalTest(self, state):
         # TODO: Implement as intended
-        if state in self.goals:
-            return True
-        else:
-            return False
+        return state in self.goals
 
     # Implements the Manhattan Distance Heuristic, which (given a state)
     # provides the cell-distance to the nearest goal state
@@ -104,7 +101,7 @@ class MazeProblem:
         x = state[0]
         y = state[1]
         costOfTrans = MazeProblem.cost(self, state)
-        
+
         # The symbols at the adjacent locations on the graph:
         up = self.maze[y-1][x]
         down = self.maze[y+1][x]
