@@ -19,6 +19,8 @@ class Pathfinder:
             gOfN = parent.totalCost + child[1]
             if not(child[2] in vistedNodes):
                 vistedNodes.append(child[2])
+                # incrementing the count
+                problem.count += 1
                 prQ.put(SearchTreeNode(child[2], child[0], parent, gOfN, MazeProblem.heuristic(problem, child[2])))
 
     def createPath(goalNode):
@@ -28,6 +30,8 @@ class Pathfinder:
             resultPath.append(currentNode.action)
             currentNode = currentNode.parent
         resultPath.reverse()
+        # printing the count for the report
+        print(problem.count)
         return resultPath
 
     @staticmethod
@@ -41,6 +45,8 @@ class Pathfinder:
             if problem.goalTest(nextNode.state):
                 return Pathfinder.createPath(nextNode)
             Pathfinder.generateChildren(problem, pQ, nextNode, nodesVisited)
+        # printing the count
+        print(problem.count)
         return []
 
 class PathfinderTests(unittest.TestCase):

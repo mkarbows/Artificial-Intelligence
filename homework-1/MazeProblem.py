@@ -56,6 +56,9 @@ class MazeProblem:
         self.initial = None
         self.goals = []
 
+        # for the report
+        self.count = 0
+
         for r in list(enumerate(maze)):
             for c in list(enumerate(r[1])):
                 state = (c[0], r[0])
