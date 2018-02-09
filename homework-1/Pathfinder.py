@@ -51,7 +51,11 @@ class Pathfinder:
 
 class PathfinderTests(unittest.TestCase):
     def test_maze1(self):
-        maze = ["XXXXX", "X..GX", "X...X", "X*..X", "XXXXX"]
+        maze = ["XXXXX",
+                "X..GX",
+                "X...X",
+                "X*..X",
+                "XXXXX"]
         problem = MazeProblem(maze)
         soln = Pathfinder.solve(problem)
         solnTest = problem.solnTest(soln)
@@ -59,7 +63,11 @@ class PathfinderTests(unittest.TestCase):
         self.assertEqual(solnTest[0], 4)
 
     def test_maze2(self):
-        maze = ["XXXXX", "XG..X", "XX..X", "X*..X", "XXXXX"]
+        maze = ["XXXXX",
+                "XG..X",
+                "XX..X",
+                "X*..X",
+                "XXXXX"]
         problem = MazeProblem(maze)
         soln = Pathfinder.solve(problem)
         solnTest = problem.solnTest(soln)
@@ -67,7 +75,11 @@ class PathfinderTests(unittest.TestCase):
         self.assertEqual(solnTest[0], 4)
 
     def test_maze3(self):
-        maze = ["XXXXX", "X..GX", "X.MMX", "X*..X", "XXXXX"]
+        maze = ["XXXXX",
+                "X..GX",
+                "X.MMX",
+                "X*..X",
+                "XXXXX"]
         problem = MazeProblem(maze)
         soln = Pathfinder.solve(problem)
         solnTest = problem.solnTest(soln)
@@ -75,7 +87,55 @@ class PathfinderTests(unittest.TestCase):
         self.assertEqual(solnTest[0], 4)
 
     def test_maze4(self):
-        maze = ["XXXXXX", "X....X", "X*.XXX", "X..XGX", "XXXXXX"]
+        maze = ["XXXXXX",
+                "X....X",
+                "X*.XXX",
+                "X..XGX",
+                "XXXXXX"]
+        problem = MazeProblem(maze)
+        soln = Pathfinder.solve(problem)
+        self.assertFalse(soln)
+
+    def test_maze5(self):
+        maze = ["XXXXXXXX",
+                "X......X",
+                "X*.X..XX",
+                "X..XGXXX",
+                "XXXXXXXX"]
+        problem = MazeProblem(maze)
+        soln = Pathfinder.solve(problem)
+        solnTest = problem.solnTest(soln)
+        self.assertTrue(solnTest[1])
+        self.assertEqual(solnTest[0], 6)
+
+    def test_maze6(self):
+        maze = ["XXXXXXXX",
+                "X......X",
+                "X*.XX.XX",
+                "X..XGXXX",
+                "XXXXXXXX"]
+        problem = MazeProblem(maze)
+        soln = Pathfinder.solve(problem)
+        self.assertFalse(soln)
+
+    def test_maze7(self):
+        maze = ["XXXXXXX",
+                "X..G..X",
+                "XMMM.MX",
+                "X*....X",
+                "XXXXXXX"]
+        problem = MazeProblem(maze)
+        soln = Pathfinder.solve(problem)
+        solnTest = problem.solnTest(soln)
+        self.assertTrue(solnTest[1])
+        self.assertEqual(solnTest[0], 6)
+
+    def test_maze8(self):
+        maze = ["XXXXXXXXX",
+                "X.XGX...X",
+                "XMXXXMMMX",
+                "X*......X",
+                "XXXXXXXXX"]
         problem = MazeProblem(maze)
         soln = Pathfinder.solve(problem)
         self.assertFalse(soln)
