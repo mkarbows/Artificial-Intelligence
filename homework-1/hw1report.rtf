@@ -9,9 +9,9 @@
 \
 \pard\pardeftab720\partightenfactor0
 \cf2 \cb3 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 Explain your choices of data structures for the open and closed lists of your Pathfinder's graph search:\
-The open list is a priority queue because I wanted to be able to have the nodes ordered. The closed list is a simple array that contains the nodes already visited because that is the only information we need from that list.\
+\outl0\strokewidth0 \strokec2 1. Explain your choices of data structures for the open and closed lists of your Pathfinder's graph search:\
+	The open list is a priority queue because I wanted to be able to have the nodes ordered. Additionally, a priority queue was best for the open list because the first object inserted into a queue is processed first. The closed list is a simple array that contains the nodes already visited because that is the only information we need from that list.\
 \
 \pard\tx720\pardeftab720\partightenfactor0
-\cf2 Create some large, uniform-cost mazes (i.e., with no mud tiles) and run both your Uninformed Breadth-first Tree Search algorithm from CW1 and your A* Graph Search from this assignment to find a solution. Add a counter to each Pathfinder that prints out how many nodes were generated during each of the BFS and A* runs and compare the outcomes. How effective was your heuristic at mitigating computational cost?\cb1 \uc0\u8232 \cb3 \
+\cf2 2. Create some large, uniform-cost mazes (i.e., with no mud tiles) and run both your Uninformed Breadth-first Tree Search algorithm from CW1 and your A* Graph Search from this assignment to find a solution. Add a counter to each Pathfinder that prints out how many nodes were generated during each of the BFS and A* runs and compare the outcomes. How effective was your heuristic at mitigating computational cost?\cb1 \uc0\u8232 	Based on the results of the counters, the heuristic was successful in mitigating computational cost. Being able to determine how much the estimated future cost from any given node proved to be beneficial when trying to determine the best path.\cb3 \
 }
