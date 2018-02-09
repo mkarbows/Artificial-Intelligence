@@ -51,6 +51,7 @@ class MazeProblem:
         self.maze = maze
         self.goals = []
 
+        # counter for hw1 report
         self.count = 0
 
         for y in range(0, len(maze)):

@@ -31,7 +31,8 @@ class Pathfinder:
                 return newNode
             # If it is not a goal state, add it to the queue.
             queue.append(newNode)
-        problem.count += 1
+            # increment the count
+            problem.count += 1
         # Continue the search with the updated queue.
         return Pathfinder.findGoal(queue, problem)
 
@@ -57,7 +58,7 @@ class Pathfinder:
         queue = [rootNode]
         # Find a node that is a goal.
         goalNode = Pathfinder.findGoal(queue, problem)
-
+        # printing count for hw1 report
         print(problem.count)
         # Return the path that gets you to that node.
         return Pathfinder.createPath(problem, goalNode)
