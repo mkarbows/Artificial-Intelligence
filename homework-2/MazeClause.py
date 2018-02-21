@@ -47,7 +47,11 @@ class MazeClause:
     def isEmpty (self):
         # TODO: This is currently implemented incorrectly; see
         # spec for details!
-        return False
+        empty = False
+        if self.props:
+            empty = True
+        return empty 
+        # return False
 
     def __eq__ (self, other):
         return self.props == other.props and self.valid == other.valid
