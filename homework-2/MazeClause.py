@@ -19,24 +19,28 @@ class MazeClause:
 
         mazeProps = None
         negationStatus = None
-        for p in props:
-            # mazeProps is the first element in the tuple given by the props argument
-            mazeProps = p[0]
-            # second element in the props tuple
-            negationStatus = p[1]
+        # print('props', props)
+        # [(('X', (1, 1)), True), (('X', (2, 1)), True), (('Y', (1, 2)), False)]
+        for j,k in props:
+            mazeProps = j
+            negationStatus = k
             self.props[mazeProps] = negationStatus
-        # deal with validity
         same1 = None
         same2 = None
         # for each two keys in dict, compare them
-        itertools.combinations(self.props, 2):
+        for a, b in itertools.combinations(self.props, 2):
+            print('self.props', self.props)
+            print('a', a, ' b', b)
             # check if coordinates are same
             if a[1] == b[1]:
+                print('a1', a[1], ' b1', b[1])
                 # check if vars are the same
                 if a[0] == b[0]:
+                    print('here')
                     # save keys and negation status's
                     same1 = a
                     same2 = b
+                    # print('same1', same1, 'same2', same2)
         if same1 is not None:
             checkSame1 = self.props.get(same1)
             checkSame2 = self.props.get(same2)
@@ -81,8 +85,8 @@ class MazeClause:
                 value1 = c1.getProp(firstKey)
                 value2 = c2.getProp(firstKey)
                 if value1 != value2:
-                    # del c1.props[key1]
-                    # del c2.props[key1]
+                    del c1.props[firstKey]
+                    del c2.props[firstKey]
                     # combine c1 and c2 into new dictionary
                     ansDict.update(c1.props)
                     ansDict.update(c2.props)
