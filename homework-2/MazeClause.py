@@ -29,14 +29,14 @@ class MazeClause:
         same2 = None
         # for each two keys in dict, compare them
         for a, b in itertools.combinations(self.props, 2):
-            print('self.props', self.props)
-            print('a', a, ' b', b)
+            # print('self.props', self.props)
+            # print('a', a, ' b', b)
             # check if coordinates are same
             if a[1] == b[1]:
-                print('a1', a[1], ' b1', b[1])
+                # print('a1', a[1], ' b1', b[1])
                 # check if vars are the same
                 if a[0] == b[0]:
-                    print('here')
+                    # print('here')
                     # save keys and negation status's
                     same1 = a
                     same2 = b
@@ -74,22 +74,24 @@ class MazeClause:
         return hash(frozenset(self.props.items()))
 
     def __str__ (self):
-        return ""
+        return str(self.props)
 
     @staticmethod
     def resolve (c1, c2):
         results = set()
         ansDict = {}
+        print('c1', c1)
+        print('c2', c2)
         for firstKey in c1.props:
             if firstKey in c2.props:
                 value1 = c1.getProp(firstKey)
                 value2 = c2.getProp(firstKey)
                 if value1 != value2:
-                    del c1.props[firstKey]
-                    del c2.props[firstKey]
                     # combine c1 and c2 into new dictionary
                     ansDict.update(c1.props)
                     ansDict.update(c2.props)
+                    del ansDict[firstKey]
+                    print('ansDict', ansDict)
                     newMazeC = MazeClause(ansDict)
                     results.add(newMazeC)
         return results
