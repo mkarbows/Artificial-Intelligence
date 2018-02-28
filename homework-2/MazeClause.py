@@ -45,11 +45,12 @@ class MazeClause:
                 self.props = {}
 
     def getProp (self, prop):
-        # TODO: This is currently implemented incorrectly; see
-        # spec for details!
         valueOfProp = None
         for m in self.props:
-            valueOfProp = self.props.get(m)
+            if m == prop:
+                answer = self.props.get(m)
+                valueOfProp = answer
+            # valueOfProp = self.props.get(m)
         return valueOfProp
 
     def isValid (self):
