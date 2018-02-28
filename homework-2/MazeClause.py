@@ -50,20 +50,15 @@ class MazeClause:
             if m == prop:
                 answer = self.props.get(m)
                 valueOfProp = answer
-            # valueOfProp = self.props.get(m)
         return valueOfProp
 
     def isValid (self):
-        # TODO: This is currently implemented incorrectly; see
-        # spec for details!
         return self.valid
 
     def isEmpty (self):
-        # TODO: This is currently implemented incorrectly; see
-        # spec for details!
-        empty = False
+        empty = True
         if self.props:
-            empty = True
+            empty = False
         return empty
 
     def __eq__ (self, other):
