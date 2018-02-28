@@ -24,8 +24,25 @@ class MazeClause:
             mazeProps = p[0]
             # second element in the props tuple
             negationStatus = p[1]
-            
             self.props[mazeProps] = negationStatus
+        # deal with validity
+        same1 = None
+        same2 = None
+        # for each two keys in dict, compare them
+        itertools.combinations(self.props, 2):
+            # check if coordinates are same
+            if a[1] == b[1]:
+                # check if vars are the same
+                if a[0] == b[0]:
+                    # save keys and negation status's
+                    same1 = a
+                    same2 = b
+        if same1 is not None:
+            checkSame1 = self.props.get(same1)
+            checkSame2 = self.props.get(same2)
+            if checkSame1 != checkSame2:
+                self.valid = True
+                self.props = {}
 
     def getProp (self, prop):
         # TODO: This is currently implemented incorrectly; see
