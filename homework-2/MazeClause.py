@@ -1,4 +1,6 @@
 '''
+Megan Karbowski
+
 MazeClause.py
 
 Specifies a Propositional Logic Clause formatted specifically
@@ -14,8 +16,7 @@ class MazeClause:
     def __init__ (self, props):
         self.props = {}
         self.valid = False
-        # TODO: Process list of propositions to make a correctly
-        # formatted MazeClause
+
         mazeProps = None
         negationStatus = None
         for p in props:
@@ -23,26 +24,21 @@ class MazeClause:
             mazeProps = p[0]
             # second element in the props tuple
             negationStatus = p[1]
-            # key is the proposition ("P", [1,1]) and value is the negationStatus T/F
+            
             self.props[mazeProps] = negationStatus
-        # for k in self.props.iterkeys():
-        #     print(k)
-        # print(self.props.keys())
-        print(self.props)
 
     def getProp (self, prop):
         # TODO: This is currently implemented incorrectly; see
         # spec for details!
         valueOfProp = None
         for m in self.props:
-            valueOfProp = self.props.get(k)
+            valueOfProp = self.props.get(m)
         return valueOfProp
 
     def isValid (self):
         # TODO: This is currently implemented incorrectly; see
         # spec for details!
         return self.valid
-        # return False
 
     def isEmpty (self):
         # TODO: This is currently implemented incorrectly; see
@@ -50,8 +46,7 @@ class MazeClause:
         empty = False
         if self.props:
             empty = True
-        return empty 
-        # return False
+        return empty
 
     def __eq__ (self, other):
         return self.props == other.props and self.valid == other.valid
@@ -61,17 +56,17 @@ class MazeClause:
         # lookup in a set
         return hash(frozenset(self.props.items()))
 
-    # Hint: Specify a __str__ method for ease of debugging (this
-    # will allow you to "print" a MazeClause directly to inspect
-    # its composite literals)
-    # def __str__ (self):
-    #     return ""
+    def __str__ (self):
+        return ""
+        # anytime a string is passed in it will implicitly know to sringify it?
 
     @staticmethod
     def resolve (c1, c2):
         results = set()
         # TODO: This is currently implemented incorrectly; see
         # spec for details!
+
+        #
         return results
 
 
@@ -92,7 +87,7 @@ class MazeClauseTests(unittest.TestCase):
     def test_mazeprops3(self):
         mc = MazeClause([(("X", (1, 1)), True), (("Y", (2, 1)), True), (("X", (1, 1)), False)])
         self.assertTrue(mc.isValid())
-        self.assertFalse(mc.getProp(("X", (1, 1))))
+        self.assertTrue(mc.getProp(("X", (1, 1))) is None)
         self.assertFalse(mc.isEmpty())
 
     def test_mazeprops4(self):
