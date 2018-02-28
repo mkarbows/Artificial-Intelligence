@@ -71,15 +71,23 @@ class MazeClause:
 
     def __str__ (self):
         return ""
-        # anytime a string is passed in it will implicitly know to sringify it?
 
     @staticmethod
     def resolve (c1, c2):
         results = set()
-        # TODO: This is currently implemented incorrectly; see
-        # spec for details!
-
-        #
+        ansDict = {}
+        for firstKey in c1.props:
+            if firstKey in c2.props:
+                value1 = c1.getProp(firstKey)
+                value2 = c2.getProp(firstKey)
+                if value1 != value2:
+                    # del c1.props[key1]
+                    # del c2.props[key1]
+                    # combine c1 and c2 into new dictionary
+                    ansDict.update(c1.props)
+                    ansDict.update(c2.props)
+                    newMazeC = MazeClause(ansDict)
+                    results.add(newMazeC)
         return results
 
 
