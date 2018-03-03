@@ -77,7 +77,10 @@ class MazeClause:
                         return results
                     else:
                         results.add(newMazeC)
-        return results
+        if results == c1.props or results == c2.props:
+            return {}
+        else:
+            return results
 
 
 class MazeClauseTests(unittest.TestCase):

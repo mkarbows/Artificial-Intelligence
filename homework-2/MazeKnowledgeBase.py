@@ -9,37 +9,45 @@ from MazeClause import MazeClause
 import unittest
 
 class MazeKnowledgeBase:
-    
+
     def __init__ (self):
         self.clauses = set()
-    
+
     # [!] Assumes that a clause is never added that causes the
     # KB to become inconsistent
     def tell (self, clause):
-        # TODO: This is currently implemented incorrectly; see
-        # spec for details!
-        return
-        
+        return self.clauses.add(clause)
+
+
     # [!] Queries are always MazeClauses
     def ask (self, query):
         # TODO: Implement resolution inference here!
         # This is currently implemented incorrectly; see
         # spec for details!
+        for c in self.Clauses
+        # look at every pair of clauses
+        # return true if after you do the result funciton you get the empyt set, add int he negated clasue
+
+        # set (new), new set (clauses), in query.props add a new mazeclause to new with everything the same except for opposite value (want to negate query)
+        # each pair.resolve of two clauses
+         # keep adding in new clauses until
+         # while loop should keep going until new subset of Clauses
+         # if teh while loop ends then return false
         return False
-            
-    
+
+
 class MazeKnowledgeBaseTests(unittest.TestCase):
     def test_mazekb1(self):
         kb = MazeKnowledgeBase()
         kb.tell(MazeClause([(("X", (1, 1)), True)]))
         self.assertTrue(kb.ask(MazeClause([(("X", (1, 1)), True)])))
-        
+
     def test_mazekb2(self):
         kb = MazeKnowledgeBase()
         kb.tell(MazeClause([(("X", (1, 1)), False)]))
         kb.tell(MazeClause([(("X", (1, 1)), True), (("Y", (1, 1)), True)]))
         self.assertTrue(kb.ask(MazeClause([(("Y", (1, 1)), True)])))
-        
+
     def test_mazekb3(self):
         kb = MazeKnowledgeBase()
         kb.tell(MazeClause([(("X", (1, 1)), False), (("Y", (1, 1)), True)]))
@@ -48,7 +56,7 @@ class MazeKnowledgeBaseTests(unittest.TestCase):
         kb.tell(MazeClause([(("X", (1, 1)), True)]))
         self.assertTrue(kb.ask(MazeClause([(("W", (1, 1)), True)])))
         self.assertFalse(kb.ask(MazeClause([(("Y", (1, 1)), False)])))
-        
+
     def test_mazekb4(self):
         kb = MazeKnowledgeBase()
         kb.tell(MazeClause([(("X", (1, 1)), False), (("Y", (1, 1)), True), (("W", (1, 1)), True)]))
@@ -58,7 +66,7 @@ class MazeKnowledgeBaseTests(unittest.TestCase):
         kb.tell(MazeClause([(("W", (1, 1)), True)]))
         kb.tell(MazeClause([(("T", (1, 1)), True)]))
         self.assertTrue(kb.ask(MazeClause([(("Z", (1, 1)), False)])))
-        
+
     def test_mazekb5(self):
         kb = MazeKnowledgeBase()
         kb.tell(MazeClause([(("X", (1, 1)), False), (("Y", (1, 1)), True), (("W", (1, 1)), True)]))
@@ -68,7 +76,7 @@ class MazeKnowledgeBaseTests(unittest.TestCase):
         kb.tell(MazeClause([(("W", (1, 1)), True)]))
         kb.tell(MazeClause([(("T", (1, 1)), True)]))
         self.assertTrue(kb.ask(MazeClause([(("Z", (1, 1)), True), (("W", (1, 1)), True)])))
-    
+
     def test_mazekb6(self):
         kb = MazeKnowledgeBase()
         kb.tell(MazeClause([(("X", (1, 1)), False), (("Y", (1, 1)), False), (("Z", (1, 1)), False)]))
@@ -76,8 +84,7 @@ class MazeKnowledgeBaseTests(unittest.TestCase):
         self.assertFalse(kb.ask(MazeClause([(("Z", (1, 1)), False)])))
         kb.tell(MazeClause([(("Y", (1, 1)), True)]))
         self.assertTrue(kb.ask(MazeClause([(("Z", (1, 1)), False)])))
-        
-        
+
+
 if __name__ == "__main__":
     unittest.main()
-    
