@@ -7,26 +7,42 @@ with side-information.
 '''
 from MazeClause import MazeClause
 import unittest
+import itertools
 
 class MazeKnowledgeBase:
 
     def __init__ (self):
         self.clauses = set()
 
+    def __str__ (self):
+        return str(self.clauses)
+
     # [!] Assumes that a clause is never added that causes the
     # KB to become inconsistent
     def tell (self, clause):
         return self.clauses.add(clause)
-
 
     # [!] Queries are always MazeClauses
     def ask (self, query):
         # TODO: Implement resolution inference here!
         # This is currently implemented incorrectly; see
         # spec for details!
-        for c in self.Clauses
+
+        newClauses = set()
+        # add the negated query and the other clauses to new clauses
+        newClauses.add(self.clauses)
+        newClauses.add(query.props)
+        # print(newClauses)
+        # newClauses = self.clauses.add(query.props)
+        # print('query',query.props)
+        new = set()
+
+        # for each two clauses in clauses, compare them
+        for a, b in itertools.combinations(self.clauses, 2):
+            # print('a', a, ' b', b)
+            MazeClause.resolve(a, b)
         # look at every pair of clauses
-        # return true if after you do the result funciton you get the empyt set, add int he negated clasue
+        # return true if after you do the result funciton you get the empyt set, add the he negated clasue
 
         # set (new), new set (clauses), in query.props add a new mazeclause to new with everything the same except for opposite value (want to negate query)
         # each pair.resolve of two clauses
