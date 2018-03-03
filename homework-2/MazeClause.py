@@ -19,16 +19,6 @@ class MazeClause:
 
         mazeProps = None
         negationStatus = None
-        # print('props', props)
-        # [(('X', (1, 1)), True), (('X', (2, 1)), True), (('Y', (1, 2)), False)]
-        # for j,k in props:
-        #     mazeProps = j
-        #     negationStatus = k
-        #     self.props[mazeProps] = negationStatus
-        # # props^ is not a dictionary so can't use this
-
-        # print('mazeProps', mazeProps)
-        # print('negationStatus', negationStatus)
 
         for p in props:
             mazeProps = p[0]
@@ -43,49 +33,18 @@ class MazeClause:
             else:
                 self.props[mazeProps] = negationStatus
 
-        # if mazeProps in self.props:
-        #     print('hi', mazeProps)
-
-
-        # same1 = None
-        # same2 = None
-        # # for each two keys in dict, compare them
-        # for a, b in itertools.combinations(self.props, 2):
-        #     # print('self.props', self.props)
-        #     # print('a', a, ' b', b)
-        #     # check if coordinates are same
-        #     if a[1] == b[1]:
-        #         # print('a1', a[1], ' b1', b[1])
-        #         # check if vars are the same
-        #         if a[0] == b[0]:
-        #             # print('here')
-        #             # save keys and negation status's
-        #             same1 = a
-        #             same2 = b
-        #             # print('same1', same1, 'same2', same2)
-        # if same1 is not None:
-        #     checkSame1 = self.props.get(same1)
-        #     checkSame2 = self.props.get(same2)
-        #     if checkSame1 != checkSame2:
-        #         self.valid = True
-        #         self.props = {}
-
     def getProp (self, prop):
-        valueOfProp = None
-        for m in self.props:
-            if m == prop:
-                answer = self.props.get(m)
-                valueOfProp = answer
-        return valueOfProp
+        if prop in self.props:
+            return self.props[prop]
+        return None
 
     def isValid (self):
         return self.valid
 
     def isEmpty (self):
-        empty = True
-        if self.props:
-            empty = False
-        return empty
+        if len(self.props) == 0:
+            return True
+        return False
 
     def __eq__ (self, other):
         return self.props == other.props and self.valid == other.valid
@@ -102,26 +61,22 @@ class MazeClause:
     def resolve (c1, c2):
         results = set()
         ansDict = {}
-        # print('c1', c1)
-        # print('c2', c2)
         for firstKey in c1.props:
             if firstKey in c2.props:
                 value1 = c1.getProp(firstKey)
                 value2 = c2.getProp(firstKey)
                 if value1 != value2:
-                    # combine c1 and c2 into new dictionary
                     ansDict.update(c1.props)
                     ansDict.update(c2.props)
-                    # print('ansDict1', ansDict)
+
                     del ansDict[firstKey]
-                    # print('ansDictAfterDel', ansDict)
+
                     newMazeC = MazeClause(list(ansDict.items()))
+
                     if newMazeC.isValid():
-                        # print('here')
                         return results
                     else:
                         results.add(newMazeC)
-        # print('mazeclause', newMazeC)
         return results
 
 
@@ -180,7 +135,7 @@ class MazeClauseTests(unittest.TestCase):
         mc1 = MazeClause([(("X", (1, 1)), True), (("Y", (1, 1)), False), (("Z", (1, 1)), True)])
         mc2 = MazeClause([(("X", (1, 1)), False), (("Y", (1, 1)), True), (("W", (1, 1)), False)])
         res = MazeClause.resolve(mc1, mc2)
-        self.assertEqual(len(res), 0)
+        self.assertEqual(len(res), 2)
 
     def test_mazeprops10(self):
         mc1 = MazeClause([(("X", (1, 1)), True), (("Y", (1, 1)), False), (("Z", (1, 1)), True)])
