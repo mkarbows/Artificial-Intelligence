@@ -75,7 +75,11 @@ model.add_transition(pState, dState)
 
 model.bake()
 
-print (model.probability([votingCPT]))
-# print (model.probability(['B', 'B', 'B']))
-# print (model.log_probability(['C', 'A', 'B']))
-# print (model.log_probability(['B', 'A', 'A']))
+print(model.predict_proba({}))
+
+# first task:
+# marginals = model.predict_proba({})
+# print(marginals[5].parameters[0])
+
+# second task:
+print(model.predict_proba({'ageGroup':'1'}))
