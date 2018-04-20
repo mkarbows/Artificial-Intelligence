@@ -75,8 +75,7 @@ model.add_transition(pState, dState)
 
 model.bake()
 
-
-# print (model.probability(['A', 'B', 'C']))
+print (model.probability([votingCPT]))
 # print (model.probability(['B', 'B', 'B']))
 # print (model.log_probability(['C', 'A', 'B']))
 # print (model.log_probability(['B', 'A', 'A']))
