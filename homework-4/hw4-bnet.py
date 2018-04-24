@@ -5,12 +5,6 @@ from pomegranate import *
 # First, determine who is currently charted to win the congressional seat and by what margin.
 # Second, for each of the following, (a) compute the probability requested and then (b) determine whether or not the outreach team should target the individual for canvassing, and (c) record their values in your report.
 
-# make CPT for every var
-# ex CPT for V (parents are I, G) and it will ahve 8 rows
-# I,G,V = prob
-# 0,0,0 = 0.2974
-# 0,0,1 = 0.7
-
 # need to set inital vals of parents
 ageGroup = DiscreteDistribution( { '0': 0.5, '1': 0.5 })
 politicalLeaning = DiscreteDistribution( { '0': 0.5, '1': 0.5 } )
@@ -78,8 +72,23 @@ model.bake()
 print(model.predict_proba({}))
 
 # first task:
-# marginals = model.predict_proba({})
-# print(marginals[5].parameters[0])
+voting = model.predict_proba({})
+print('voting')
+print(voting[5].parameters[0])
 
 # second task:
+# add these to the report:
+print('#1')                 # P(V | A=1)
 print(model.predict_proba({'ageGroup':'1'}))
+print('#2')
+print(model.predict_proba({'gunControlCPT':'0'}))
+print('#3')
+print(model.predict_proba({'gunControlCPT':'0', 'immigrationCPT': '0'}))
+print('#4')
+print(model.predict_proba({'gunControlCPT':'1', 'immigrationCPT': '0'}))
+print('#5')
+print(model.predict_proba({'gunControlCPT':'0', 'immigrationCPT': '0', 'drugCPT':'0', 'politicalLeaning':'1', 'ageGroup':'0'}))
+print('#6')
+print(model.predict_proba({'gunControlCPT':'0', 'immigrationCPT': '1', 'drugCPT':'1', 'politicalLeaning':'1', 'ageGroup':'0'}))
+print('#7')
+print(model.predict_proba({'gunControlCPT':'1', 'immigrationCPT': '0', 'drugCPT':'0', 'politicalLeaning':'0', 'ageGroup':'1'}))
